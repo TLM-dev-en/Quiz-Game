@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Quiz
+        </title>
+    </head>
+
+    <body>
+        <div id="questionaire"></div>
+    </body>
+
+    <script>
+        // Assuming quizData.json contains an array of question objects
+        // Example: [{"question": "What is the capital of France?", "answers": ["London", "Paris", "Berlin"], "correctAnswer": "Paris"}, ...]
+        fetch('../json/quizData.json')
+            .then(response => response.json())
+            .then(jsonData => {
+                const body = document.getElementById('questionaire');
+
+                jsonData.forEach((questionData, index) => {
+                    const questionElement = document.createElement('div');
+                    questionElement.classList.add('question');
+                    questionElement.innerHTML = `<h3>Question ${index + 1}: ${questionData.question}</h3>`;
+
+                    const answersElement = document.createElement('ul');
+                    questionData.answers.forEach(answer => {
+                        answersElement.innerHTML += `<li><input type="radio" name="question-${index}" value="${answer}">${answer}</li>`;
+                    });
+                    questionElement.appendChild(answersElement);
+                    body.appendChild(questionElement);
+                });
+            });
+
+    </script>
+</html>
